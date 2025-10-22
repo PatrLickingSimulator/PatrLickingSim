@@ -119,13 +119,13 @@
 
   <div class="lore">
     <h2 onclick="toggleLore('origin')">📖 Patr’s Origin ▼</h2>
-    <div id="origin" style="display:none;">
+    <div id="origin" style="display:block;">
       <p>Long ago, in a forgotten mailbox deep in the woods, a mysterious figure named Patr was born from a cursed envelope. His tongue, enchanted by ancient ink, seeks only one thing: to taste the truth hidden in letters.</p>
       <p>Some say he was once a postman. Others believe he’s the ghost of a rejected love confession. All we know is… he licks.</p>
     </div>
 
     <h2 onclick="toggleLore('shopkeeper')">👻 Haunted Shopkeeper ▼</h2>
-    <div id="shopkeeper" style="display:none;">
+    <div id="shopkeeper" style="display:block;">
       <p>The Pen Shop is run by a shadowy figure known only as “The Inkkeeper.” He never speaks — except when you buy a Halloween pen. Then, he whispers things like “This quill remembers your sins” or “The pumpkin pen sees your future.”</p>
       <p>Some players report hearing scratching sounds after buying the Ghostwriter. Others… never returned.</p>
     </div>
@@ -133,8 +133,7 @@
 
   <div id="message"></div>
   <div class="footer">Made by Atharv & Arjun 🔥</div>
-
-  <script>
+ <script>
     const halloweenActive = new Date().getMonth() === 9 && new Date().getDate() < 32;
 
     const game = {
@@ -203,13 +202,14 @@
       { name: "👻 Ghostwriter", cost: 350, halloween: true },
       { name: "🩸 Bloody Quill", cost: 500, halloween: true }
     ];
+
     const tongueItems = [
       { name: "Normal Tongue", cost: 100 },
       { name: "Sticky Tongue", cost: 200 },
       { name: "Slurpy Tongue", cost: 300 },
       { name: "Turbo Tongue", cost: 400 },
       { name: "🧟 Zombie Tongue", cost: 250, halloween: true },
-      { name: "👻 Ghost Tongue", cost: 350, halloween: true },
+{ name: "👻 Ghost Tongue", cost: 350, halloween: true },
       { name: "🧛 Vampire Tongue", cost: 500, halloween: true }
     ];
 
