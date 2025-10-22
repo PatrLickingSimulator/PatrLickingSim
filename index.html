@@ -6,16 +6,12 @@
   <link rel="icon" type="image/png" href="favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      font-family: 'Poppins', sans-serif;
-    }
-
+    * { font-family: 'Poppins', sans-serif; }
     body {
       text-align: center;
       padding: 30px;
       transition: background-color 0.5s, color 0.5s;
     }
-
     textarea {
       width: 80%;
       height: 100px;
@@ -25,7 +21,6 @@
       padding: 10px;
       border: 2px solid #ccc;
     }
-
     button {
       padding: 10px 20px;
       margin: 5px;
@@ -37,27 +32,22 @@
       color: white;
       font-weight: 600;
     }
-
     button:disabled {
       background-color: #aaa;
       cursor: not-allowed;
     }
-
     h2 {
       cursor: pointer;
       margin-top: 30px;
     }
-
     #points, #licksLeft {
       font-size: 20px;
       margin: 20px 0;
     }
-
     #message {
       margin-top: 15px;
       font-size: 18px;
     }
-
     #halloweenBanner {
       font-size: 32px;
       font-weight: 600;
@@ -66,44 +56,46 @@
       text-shadow: 0 0 10px #ff9800;
       display: none;
     }
-
     .shop {
       margin: 20px 0;
     }
-
     .shop button {
       display: block;
       margin: 8px auto;
       width: 250px;
     }
-
     .footer {
       margin-top: 40px;
       font-size: 16px;
       opacity: 0.7;
     }
-
     .halloween {
       background-color: #1c1c1c;
       color: #ff9800;
     }
-
     .halloween button {
       background-color: #ff9800;
     }
-
     .halloween textarea {
       background-color: #2c2c2c;
       color: #ffcc80;
       border: 2px solid #ff9800;
     }
-
     .halloween h1 {
       text-shadow: 0 0 10px #ff9800;
     }
-
     .halloween #halloweenBanner {
       display: block;
+    }
+    .lore {
+      margin-top: 40px;
+      text-align: left;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .lore p {
+      margin: 10px 0;
     }
   </style>
 </head>
@@ -123,6 +115,20 @@
 
     <h2 onclick="toggleShop('tongueShop')">👅 Tongue Shop ▼</h2>
     <div id="tongueShop" style="display: none;"></div>
+  </div>
+
+  <div class="lore">
+    <h2 onclick="toggleLore('origin')">📖 Patr’s Origin ▼</h2>
+    <div id="origin" style="display:none;">
+      <p>Long ago, in a forgotten mailbox deep in the woods, a mysterious figure named Patr was born from a cursed envelope. His tongue, enchanted by ancient ink, seeks only one thing: to taste the truth hidden in letters.</p>
+      <p>Some say he was once a postman. Others believe he’s the ghost of a rejected love confession. All we know is… he licks.</p>
+    </div>
+
+    <h2 onclick="toggleLore('shopkeeper')">👻 Haunted Shopkeeper ▼</h2>
+    <div id="shopkeeper" style="display:none;">
+      <p>The Pen Shop is run by a shadowy figure known only as “The Inkkeeper.” He never speaks — except when you buy a Halloween pen. Then, he whispers things like “This quill remembers your sins” or “The pumpkin pen sees your future.”</p>
+      <p>Some players report hearing scratching sounds after buying the Ghostwriter. Others… never returned.</p>
+    </div>
   </div>
 
   <div id="message"></div>
@@ -176,7 +182,11 @@
         this.inventory.push(item.name);
         if (type === "pen") this.penLevel++;
         if (type === "tongue") this.tongueLevel++;
-        return `✅ Bought ${item.name}! ${type === "pen" ? "Pen" : "Tongue"} level is now ${type === "pen" ? this.penLevel : this.tongueLevel}.`;
+        let message = `✅ Bought ${item.name}! ${type === "pen" ? "Pen" : "Tongue"} level is now ${type === "pen" ? this.penLevel : this.tongueLevel}.`;
+        if (item.halloween) {
+          message += ` 👻 The haunted shopkeeper whispers: "${item.name} will change your fate..."`;
+        }
+        return message;
       }
     };
 
@@ -193,7 +203,6 @@
       { name: "👻 Ghostwriter", cost: 350, halloween: true },
       { name: "🩸 Bloody Quill", cost: 500, halloween: true }
     ];
-
     const tongueItems = [
       { name: "Normal Tongue", cost: 100 },
       { name: "Sticky Tongue", cost: 200 },
@@ -221,6 +230,11 @@
       el.style.display = el.style.display === "none" ? "block" : "none";
     }
 
+    function toggleLore(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === "none" ? "block" : "none";
+    }
+
     function updateUI(message) {
       document.getElementById("points").textContent = `🧮 Points: ${game.points}`;
       document.getElementById("licksLeft").textContent = `👅 Licks Available: ${game.licksAvailable}`;
@@ -230,7 +244,7 @@
       renderShop("tongueShop", tongueItems, "tongue");
     }
 
- function writeLetter() {
+    function writeLetter() {
       const text = document.getElementById("letterInput").value;
       if (!text.trim()) return updateUI("✍️ Write something first!");
       const result = game.writeLetter(text);
