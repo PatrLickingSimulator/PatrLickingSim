@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Patr Licking Simulator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      text-align: center;
+      padding: 30px;
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    textarea {
+      width: 80%;
+      height: 100px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      padding: 10px;
+      border: 2px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: none;
+      background-color: #ff6f00;
+      color: white;
+      font-weight: 600;
+    }
+
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    h2 {
+      cursor: pointer;
+      margin-top: 30px;
+    }
+
+    #points, #licksLeft {
+      font-size: 20px;
+      margin: 20px 0;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    #halloweenBanner {
+      font-size: 32px;
+      font-weight: 600;
+      margin: 30px 0;
+      color: #ff9800;
+      text-shadow: 0 0 10px #ff9800;
+      display: none;
+    }
+
+    .shop {
+      margin: 20px 0;
+    }
+
+    .shop button {
+      display: block;
+      margin: 8px auto;
+      width: 250px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 16px;
+      opacity: 0.7;
+    }
+
+    .halloween {
+      background-color: #1c1c1c;
+      color: #ff9800;
+    }
+
+    .halloween button {
+      background-color: #ff9800;
+    }
+
+    .halloween textarea {
+      background-color: #2c2c2c;
+      color: #ffcc80;
+      border: 2px solid #ff9800;
+    }
+
+    .halloween h1 {
+      text-shadow: 0 0 10px #ff9800;
+    }
+
+    .halloween #halloweenBanner {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎃 Patr Licking Simulator</h1>
+  <div id="halloweenBanner">Happy Halloween 👻</div>
+  <div id="points">Points: 0</div>
+  <div id="licksLeft">Licks Available: 0</div>
+
+  <textarea id="letterInput" placeholder="Write your letter..."></textarea><br>
+  <button onclick="writeLetter()">Submit Letter</button>
+  <button onclick="lickLetter()" id="lickBtn" disabled>Lick Letter</button><br><br>
+
+  <div class="shop">
+    <h2 onclick="toggleShop('penShop')">🖋 Pen Shop ▼</h2>
+    <div id="penShop" style="display: none;"></div>
+
+    <h2 onclick="toggleShop('tongueShop')">👅 Tongue Shop ▼</h2>
+    <div id="tongueShop" style="display: none;"></div>
+  </div>
+
+  <div id="message"></div>
+  <div class="footer">Made by Atharv & Arjun 🔥</div>
+
+  <script>
+    const halloweenActive = new Date().getMonth() === 9 && new Date().getDate() < 32;
+
+    const game = {
+      points: 0,
+      penLevel: 1,
+      tongueLevel: 1,
+      licksAvailable: 0,
+      inventory: [],
+      halloweenMode: halloweenActive,
+
+      writeLetter(text) {
+        const words = text.trim().split(/\s+/);
+        const uniqueWords = new Set(words);
+        const hasPunctuation = /[.!?]/.test(text);
+        const isSpam = (() => {
+          const repeatedWordSeq = /(\b\w+\b)(?:\s+\1){2,}/i.test(text);
+          const lowWordVariety = uniqueWords.size < 5;
+          const lowCharVariety = new Set(text.replace(/\s/g, '')).size < 5;
+          const noRealWords = words.filter(w => w.length > 3).length < 2;
+          return repeatedWordSeq || lowWordVariety || lowCharVariety || noRealWords;
+        })();
+
+        let base = uniqueWords.size * 5;
+        if (hasPunctuation) base += 10;
+        if (isSpam) base = Math.floor(base * 0.3);
+
+        const bonus = base * this.penLevel;
+        this.points += bonus;
+        this.licksAvailable++;
+        return { bonus, isSpam };
+      },
+
+      lickLetter() {
+        if (this.licksAvailable <= 0) return 0;
+        const bonus = 10 * this.tongueLevel;
+        this.points += bonus;
+        this.licksAvailable--;
+        return bonus;
+      },
+
+      buyItem(type, item) {
+        if (this.points < item.cost) return `❌ Not enough points for ${item.name}.`;
+        if (this.inventory.includes(item.name)) return `⚠️ You already own ${item.name}.`;
+        this.points -= item.cost;
+        this.inventory.push(item.name);
+        if (type === "pen") this.penLevel++;
+        if (type === "tongue") this.tongueLevel++;
+        return `✅ Bought ${item.name}! ${type === "pen" ? "Pen" : "Tongue"} level is now ${type === "pen" ? this.penLevel : this.tongueLevel}.`;
+      }
+    };
+
+    if (game.halloweenMode) {
+      document.body.classList.add("halloween");
+    }
+
+    const penItems = [
+      { name: "Ballpoint Pen", cost: 100 },
+      { name: "Gel Pen", cost: 200 },
+      { name: "Fountain Pen", cost: 300 },
+      { name: "Quill", cost: 400 },
+      { name: "🎃 Pumpkin Pen", cost: 250, halloween: true },
+      { name: "👻 Ghostwriter", cost: 350, halloween: true },
+      { name: "🩸 Bloody Quill", cost: 500, halloween: true }
+    ];
+
+    const tongueItems = [
+      { name: "Normal Tongue", cost: 100 },
+      { name: "Sticky Tongue", cost: 200 },
+      { name: "Slurpy Tongue", cost: 300 },
+      { name: "Turbo Tongue", cost: 400 },
+      { name: "🧟 Zombie Tongue", cost: 250, halloween: true },
+      { name: "👻 Ghost Tongue", cost: 350, halloween: true },
+      { name: "🧛 Vampire Tongue", cost: 500, halloween: true }
+    ];
+
+    function renderShop(shopId, items, type) {
+      const container = document.getElementById(shopId);
+      container.innerHTML = "";
+      items.forEach(item => {
+        if (item.halloween && !game.halloweenMode) return;
+        const btn = document.createElement("button");
+        btn.textContent = `${item.name} - ${item.cost} pts`;
+        btn.onclick = () => updateUI(game.buyItem(type, item));
+        container.appendChild(btn);
+      });
+    }
+
+    function toggleShop(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === "none" ? "block" : "none";
+    }
+
+    function updateUI(message) {
+      document.getElementById("points").textContent = `🧮 Points: ${game.points}`;
+      document.getElementById("licksLeft").textContent = `👅 Licks Available: ${game.licksAvailable}`;
+      document.getElementById("message").textContent = message || "";
+      document.getElementById("lickBtn").disabled = game.licksAvailable <= 0;
+      renderShop("penShop", penItems, "pen");
+      renderShop("tongueShop", tongueItems, "tongue");
+    }
+    function writeLetter() {
+      const text = document.getElementById("letterInput").value;
+      if (!text.trim()) return updateUI("✍️ Write something first!");
+      const result = game.writeLetter(text);
+      const spamNote = result.isSpam ? " ⚠️ Spam detected. Points reduced." : "";
+      updateUI(`📜 Letter submitted! Earned ${result.bonus} points.${spamNote}`);
+      document.getElementById("letterInput").value = "";
+    }
+
+    function lickLetter() {
+      const earned = game.lickLetter();
+      if (earned === 0) return updateUI("❌ No letters left to lick!");
+      updateUI(`👻 Licked the letter! Earned ${earned} points.`);
+    }
+
+    // Initial UI setup
+  </script>
+</body>
+</html>
+
