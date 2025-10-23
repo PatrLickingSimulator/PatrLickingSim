@@ -1,261 +1,473 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patra Lekhan — Mutation Madness</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-<style>
-:root{
-  --accent:#ff6f00;
-  --accent-dark:#ff9800;
-  --bg:#fffefc;
-  --card:#fff8e1;
-  --muted:#666;
-  --panel-radius:14px;
-  --glass: rgba(255,255,255,0.6);
-}
-body.dark{
-  --bg:#1e1e2e;
-  --card:#2a2a3d;
-  --muted:#aaa;
-  --glass: rgba(40,40,60,0.6);
-  --accent:#ff9800;
-  --accent-dark:#ffb74d;
-}
-*{box-sizing:border-box;font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
-html,body{height:100%;margin:0;}
-body{
-  background: var(--bg);
-  color:#222;
-  display:flex;
-  align-items:flex-start;
-  justify-content:center;
-  padding:36px;
-  transition: background-color .4s,color .4s;
-}
-.container{
-  width:100%;
-  max-width:1100px;
-  display:grid;
-  gap:18px;
-  grid-template-columns:1fr 380px;
-  align-items:start;
-}
-header{
-  grid-column:1/-1;
-  display:flex;
-  align-items:center;
-  gap:16px;
-  justify-content:space-between;
-}
-header h1{margin:0;font-size:22px;letter-spacing:0.4px;display:flex;align-items:center;gap:12px;}
-header .sub{color:var(--muted);font-size:13px;}
-.main{background:var(--glass);border-radius:var(--panel-radius);padding:18px;box-shadow:0 8px 30px rgba(20,20,20,0.06);backdrop-filter: blur(6px);min-height:480px;}
-.stats-row{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.stat{background:linear-gradient(180deg,#fff,#fff8e1);padding:10px 14px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.04);min-width:120px;text-align:center;font-weight:600;}
-body.dark .stat{background:linear-gradient(180deg,#2a2a3d,#33334b);}
-.big{font-size:20px;}
-#letterBox{background: #fff8f0;border:2px solid #f0d9b8;border-radius:10px;padding:12px;height:210px;overflow:auto;color:#333;margin-bottom:12px;}
-body.dark #letterBox{background:#2c2c3c;border:2px solid #555;color:#eee;}
-textarea#letterInput{width:100%;min-height:100px;max-height:220px;border-radius:10px;border:2px solid #efe1c9;padding:12px;font-size:15px;resize:vertical;outline:none;background:#fff;}
-body.dark textarea#letterInput{background:#2c2c3c;border:2px solid #555;color:#eee;}
-.controls{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
-button.btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700;background:var(--accent);color:white;box-shadow:0 6px 14px rgba(255,111,0,0.18);}
-button.secondary{background:transparent;border:2px solid #ddd;color:#333;font-weight:600;box-shadow:none;}
-body.dark button.secondary{color:#eee;border:2px solid #555;}
-.msg{margin-top:10px;min-height:22px;color:#333;font-weight:600;}
-body.dark .msg{color:#eee;}
-.side{background:var(--card);border-radius:var(--panel-radius);padding:16px;box-shadow:0 8px 30px rgba(20,20,20,0.05);}
-body.dark .side{background:#2a2a3d;box-shadow:0 8px 30px rgba(0,0,0,0.2);}
-.shop-section h3{margin:6px 0 8px 0;font-size:16px;display:flex;justify-content:space-between;align-items:center;}
-.shop-list{display:grid;gap:8px;max-height:360px;overflow:auto;padding-right:6px;}
-.shop-item{display:flex;justify-content:space-between;align-items:center;padding:8px;background:linear-gradient(180deg,#fff,#fff3d9);border-radius:8px;border:1px solid rgba(0,0,0,0.03);}
-body.dark .shop-item{background:linear-gradient(180deg,#3a3a4b,#2f2f42);border:1px solid rgba(255,255,255,0.05);}
-.shop-item small{display:block;color:#666;font-weight:600;font-size:12px;}
-.shop-item .buy{padding:6px 10px;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-weight:700;}
-.boxed-note{margin-top:12px;font-size:13px;color:#555;background:rgba(255,255,255,0.5);padding:8px;border-radius:8px;}
-body.dark .boxed-note{color:#ccc;background:rgba(50,50,70,0.5);}
-footer{grid-column:1/-1;text-align:center;color:#666;margin-top:6px;font-size:13px;}
-body.dark footer{color:#aaa;}
-.mode-toggle{cursor:pointer;font-weight:700;font-size:13px;color:var(--accent-dark);}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Patr Licking Simulator — Fusion</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --accent:#ff6f00;
+      --accent-dark:#ff9800;
+      --bg:#fffefc;
+      --card:#fff8e1;
+      --muted:#666;
+      --panel-radius:14px;
+      --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box;font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    html,body{height:100%;margin:0;}
+    body{
+      background: linear-gradient(180deg,#fffefa,#fff8e8);
+      color:#222;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:36px;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      transition:background-color .4s,color .4s;
+    }
+
+    .container{
+      width:100%;
+      max-width:1100px;
+      display:grid;
+      gap:18px;
+      grid-template-columns: 1fr 380px;
+      align-items:start;
+    }
+
+    header{
+      grid-column:1/-1;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      justify-content:space-between;
+    }
+    header h1{
+      margin:0;
+      font-size:22px;
+      letter-spacing:0.4px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    header .sub{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .main{
+      background:var(--glass);
+      border-radius:var(--panel-radius);
+      padding:18px;
+      box-shadow:0 8px 30px rgba(20,20,20,0.06);
+      backdrop-filter: blur(6px);
+      min-height:480px;
+    }
+
+    .stats-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:14px;
+    }
+
+    .stat{
+      background:linear-gradient(180deg,#fff,#fff8e1);
+      padding:10px 14px;
+      border-radius:10px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+      min-width:120px;
+      text-align:center;
+      font-weight:600;
+    }
+    .big{
+      font-size:20px;
+    }
+
+    #letterBox{
+      background: #fff8f0;
+      border:2px solid #f0d9b8;
+      border-radius:10px;
+      padding:12px;
+      height:210px;
+      overflow:auto;
+      color:#333;
+      margin-bottom:12px;
+    }
+
+    textarea#letterInput{
+      width:100%;
+      min-height:100px;
+      max-height:220px;
+      border-radius:10px;
+      border:2px solid #efe1c9;
+      padding:12px;
+      font-size:15px;
+      resize:vertical;
+      outline:none;
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    button.btn{
+      padding:10px 14px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      background:var(--accent);
+      color:white;
+      box-shadow:0 6px 14px rgba(255,111,0,0.18);
+    }
+
+    button.secondary{
+      background:transparent;
+      border:2px solid #ddd;
+      color:#333;
+      font-weight:600;
+      box-shadow:none;
+    }
+
+    .msg{
+      margin-top:10px;
+      min-height:22px;
+      color:#333;
+      font-weight:600;
+    }
+
+    .side{
+      background:var(--card);
+      border-radius:var(--panel-radius);
+      padding:16px;
+      box-shadow:0 8px 30px rgba(20,20,20,0.05);
+    }
+
+    .shop-section h3{
+      margin:6px 0 8px 0;
+      font-size:16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .shop-list{
+      display:grid;
+      gap:8px;
+      max-height:360px;
+      overflow:auto;
+      padding-right:6px;
+    }
+
+    .shop-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:8px;
+      background:linear-gradient(180deg,#fff,#fff3d9);
+      border-radius:8px;
+      border:1px solid rgba(0,0,0,0.03);
+    }
+    .shop-item small{display:block;color:#666;font-weight:600;font-size:12px;}
+    .shop-item .buy{padding:6px 10px;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-weight:700;}
+
+    .boxed-note{margin-top:12px;font-size:13px;color:#555;background:rgba(255,255,255,0.5);padding:8px;border-radius:8px;}
+
+    footer{grid-column:1/-1;text-align:center;color:#666;margin-top:6px;font-size:13px;}
+
+    .halloween{
+      background:#121212 !important;
+      color:var(--accent-dark) !important;
+    }
+    .halloween .main{background:#1c1c1c;}
+    .halloween .side{background:#222;}
+    .halloween textarea{background:#2b2b2b;color:#ffdca8;border-color:#ff9800;}
+    .halloween .shop-item{background:#2a2a2a;color:#ffdca8;border-color:#ff9800;}
+    .halloween button.btn{background:var(--accent-dark);box-shadow:none;}
+    .halloween #halloweenBanner{display:block;}
+
+    @media (max-width:980px){
+      .container{grid-template-columns:1fr; padding-bottom:40px;}
+      .side{order:2;}
+    }
+  </style>
 </head>
 <body>
-<div class="container" id="app">
-  <header>
-    <h1>🎃 Patra Lekhan — Mutation Madness</h1>
-    <div class="sub">Nov 1–15</div>
-    <div class="mode-toggle" id="modeToggle">🌙 Toggle Dark/Light</div>
-  </header>
-  <main class="main" id="main">
-    <div class="stats-row">
-      <div class="stat"><div style="font-size:12px;color:#666">🧮 Points</div><div id="points" class="big">0</div></div>
-      <div class="stat"><div style="font-size:12px;color:#666">👅 Licks</div><div id="licksLeft" class="big">0</div></div>
-      <div style="min-width:170px;text-align:right"><div style="font-size:12px;color:#666">Bot</div><div id="botName" style="font-weight:800">Patr-Bot</div></div>
-    </div>
-    <div id="letterBox" aria-live="polite"><p style="margin:0;color:#666;"><em>Type your letter below and seal it to earn points. Mutations active!</em></p></div>
-    <textarea id="letterInput" placeholder="Write your letter here..."></textarea>
-    <div class="controls">
-      <button class="btn" id="submitBtn">📜 Submit Letter</button>
-      <button class="btn" id="sealBtn">🔒 Seal Letter</button>
-      <button class="btn" id="lickBtn">😛 Lick / Quick-Lick</button>
-      <button class="secondary" id="clearHistory">🧾 Clear History</button>
-    </div>
-    <div class="msg" id="message">Ready to write. Let's mutate!</div>
-    <div class="boxed-note">Tip: Buy better pens, tongues & bots to boost points & reviews!</div>
-  </main>
-  <aside class="side">
-    <div class="shop-section">
-      <h3>🖋 Pen Shop</h3>
-      <div id="penShop" class="shop-list"></div>
-    </div>
-    <div class="shop-section">
-      <h3>👅 Tongue Shop</h3>
-      <div id="tongueShop" class="shop-list"></div>
-    </div>
-    <div class="shop-section">
-      <h3>🤖 Bot Shop</h3>
-      <div id="botShop" class="shop-list"></div>
-    </div>
-    <div style="margin-top:12px">
-      <div style="font-weight:700;margin-bottom:6px">Inventory</div>
-      <div id="inventory" style="min-height:40px;color:#444">— none —</div>
-    </div>
-  </aside>
-  <footer>Made with 🔥 by Atharv & Arjun</footer>
-</div>
-<script>
-// ---------- Game state ----------
-const game = JSON.parse(localStorage.getItem('patraGame')) || {
-  points:0, penLevel:1, tongueLevel:1, licksAvailable:0, inventory:[], activeBot:null, darkMode:false, mutationsActive:true
-};
+  <div class="container" id="app">
+    <header>
+      <h1>🎃 Patr / Patra Lekhan — Licking Simulator <span style="font-size:13px;color:var(--muted);font-weight:600">Fusion Build</span></h1>
+      <div class="sub">Made by Atharv & Arjun — best simulator energy ⚽🔥</div>
+    </header>
 
-// ---------- Items ----------
-const penItems=[
-  {name:"Ballpoint Pen",cost:100,stats:{power:5,speed:5,rarity:"Common"}},
-  {name:"Gel Pen",cost:200,stats:{power:10,speed:8,rarity:"Common"}},
-  {name:"Fountain Pen",cost:300,stats:{power:15,speed:10,rarity:"Rare"}},
-  {name:"Quill",cost:400,stats:{power:18,speed:12,rarity:"Rare"}},
-  {name:"Berserk Pen",cost:1000,stats:{power:0,speed:0,rarity:"Legendary"}},
-  {name:"Echo Pen",cost:1200,stats:{power:0,speed:0,rarity:"Legendary"}}
-];
-const tongueItems=[
-  {name:"Normal Tongue",cost:0,stats:{speed:1}},
-  {name:"Turbo Tongue",cost:500,stats:{speed:2}},
-  {name:"Phasing Tongue",cost:800,stats:{speed:3}}
-];
-const botItems=[
-  {name:"Patr-Bot",cost:0,stats:{pointsMultiplier:1,reviewBonus:1}},
-  {name:"Copycat Bot",cost:400,stats:{pointsMultiplier:1.5,reviewBonus:2}},
-  {name:"Sabotage Bot",cost:600,stats:{pointsMultiplier:2,reviewBonus:3}},
-  {name:"Boss Bot",cost:1200,stats:{pointsMultiplier:3,reviewBonus:5}}
-];
+    <main class="main" id="main">
+      <div class="stats-row">
+        <div class="stat">
+          <div style="font-size:12px;color:#666">🧮 Points</div>
+          <div id="points" class="big">0</div>
+        </div>
+        <div class="stat">
+          <div style="font-size:12px;color:#666">👅 Licks Available</div>
+          <div id="licksLeft" class="big">0</div>
+        </div>
+        <div style="min-width:170px;text-align:right">
+          <div style="font-size:12px;color:#666">Bot</div>
+          <div id="botName" style="font-weight:800">Patr-Bot</div>
+        </div>
+      </div>
 
-// ---------- DOM ----------
-const pointsEl=document.getElementById('points');
-const licksEl=document.getElementById('licksLeft');
-const letterBox=document.getElementById('letterBox');
-const letterInput=document.getElementById('letterInput');
-const messageEl=document.getElementById('message');
-const inventoryEl=document.getElementById('inventory');
-const penShopEl=document.getElementById('penShop');
-const tongueShopEl=document.getElementById('tongueShop');
-const botShopEl=document.getElementById('botShop');
-const submitBtn=document.getElementById('submitBtn');
-const sealBtn=document.getElementById('sealBtn');
-const lickBtn=document.getElementById('lickBtn');
-const clearBtn=document.getElementById('clearHistory');
-const modeToggle=document.getElementById('modeToggle');
+      <div id="halloweenBanner" style="display:none;font-size:28px;font-weight:800;text-align:center;color:var(--accent-dark);margin-bottom:8px">Happy Halloween 👻</div>
 
-// ---------- Functions ----------
-function saveGame(){localStorage.setItem('patraGame',JSON.stringify(game));}
-function updateUI(){
-  pointsEl.textContent=game.points;
-  licksEl.textContent=game.licksAvailable;
-  inventoryEl.textContent=game.inventory.length?game.inventory.join(', '):"— none —";
-  document.body.classList.toggle('dark',game.darkMode);
-}
-function showMessage(msg,color="#333"){messageEl.textContent=msg; messageEl.style.color=color;}
+      <div id="letterBox" aria-live="polite"><p style="margin:0;color:#666;"><em>Type your letter below and seal it to earn points. Keep it original — copy-paste disabled.</em></p></div>
 
-// ---------- Shops ----------
-function renderShop(){
-  penShopEl.innerHTML='';
-  penItems.forEach((p,i)=>{
-    const div=document.createElement('div'); div.className="shop-item";
-    div.innerHTML=`<div><strong>${p.name}</strong><small>${p.stats.rarity}</small></div><button class="buy" onclick="buyPen(${i})">Buy ${p.cost}</button>`;
-    penShopEl.appendChild(div);
-  });
-  tongueShopEl.innerHTML='';
-  tongueItems.forEach((t,i)=>{
-    const div=document.createElement('div'); div.className="shop-item";
-    div.innerHTML=`<div><strong>${t.name}</strong></div><button class="buy" onclick="buyTongue(${i})">Buy ${t.cost}</button>`;
-    tongueShopEl.appendChild(div);
-  });
-  botShopEl.innerHTML='';
-  botItems.forEach((b,i)=>{
-    const div=document.createElement('div'); div.className="shop-item";
-    div.innerHTML=`<div><strong>${b.name}</strong></div><button class="buy" onclick="buyBot(${i})">Buy ${b.cost}</button>`;
-    botShopEl.appendChild(div);
-  });
-}
-function buyPen(i){
-  if(game.points>=penItems[i].cost){game.points-=penItems[i].cost; game.inventory.push(penItems[i].name); saveGame(); updateUI(); showMessage(`Purchased ${penItems[i].name}! 🎉`,'green');}
-  else showMessage("Not enough points!",'red');
-}
-function buyTongue(i){
-  if(game.points>=tongueItems[i].cost){game.points-=tongueItems[i].cost; game.inventory.push(tongueItems[i].name); saveGame(); updateUI(); showMessage(`Purchased ${tongueItems[i].name}! 🎉`,'green');}
-  else showMessage("Not enough points!",'red');
-}
-function buyBot(i){
-  if(game.points>=botItems[i].cost){game.points-=botItems[i].cost; game.activeBot=botItems[i]; saveGame(); updateUI(); showMessage(`Hired ${botItems[i].name}! 🤖`,'green'); document.getElementById('botName').textContent=botItems[i].name;}
-  else showMessage("Not enough points!",'red');
-}
+      <textarea id="letterInput" placeholder="Write your letter here..."></textarea>
 
-// ---------- Letter Actions ----------
-function submitLetter(){
-  const text=letterInput.value.trim();
-  if(!text){showMessage("Write something first!",'red'); return;}
-  let basePoints=text.length;
-  if(game.activeBot) basePoints=Math.floor(basePoints*game.activeBot.stats.pointsMultiplier);
-  if(game.mutationsActive && Math.random()<0.25) basePoints=Math.floor(basePoints*1.5);
-  letterBox.innerHTML+=`<p>📜 ${text} → +${basePoints} pts ${game.activeBot?`[Bot Review +${game.activeBot.stats.reviewBonus}]`:''}</p>`;
-  game.points+=basePoints;
-  letterInput.value='';
-  saveGame();
-  updateUI();
-}
-function sealLetter(){
-  if(!letterInput.value.trim()){showMessage("Nothing to seal!",'red'); return;}
-  letterBox.innerHTML+=`<p>🔒 Sealed: ${letterInput.value.trim()}</p>`;
-  letterInput.value='';
-  game.licksAvailable+=1;
-  saveGame();
-  updateUI();
-  showMessage("Letter sealed! Licks gained.",'blue');
-}
-function lickLetter(){
-  if(game.licksAvailable<=0){showMessage("No licks left!",'red'); return;}
-  const pointsEarned=Math.floor(Math.random()*10)+5;
-  game.points+=pointsEarned;
-  game.licksAvailable-=1;
-  letterBox.innerHTML+=`<p>😛 Licked → +${pointsEarned} pts</p>`;
-  saveGame();
-  updateUI();
-  showMessage("Licked! Points gained.",'green');
-}
+      <div class="controls">
+        <button class="btn" id="submitBtn">📜 Submit Letter</button>
+        <button class="btn" id="sealBtn">🔒 Seal Letter</button>
+        <button class="btn" id="lickBtn">😛 Lick / Quick-Lick</button>
+        <button class="secondary" id="clearHistory">🧾 Clear History</button>
+      </div>
 
-// ---------- Events ----------
-submitBtn.onclick=submitLetter;
-sealBtn.onclick=sealLetter;
-lickBtn.onclick=lickLetter;
-clearBtn.onclick=()=>{letterBox.innerHTML='<p style="margin:0;color:#666;"><em>Letter history cleared.</em></p>'; showMessage("History cleared.",'blue');}
-modeToggle.onclick=()=>{game.darkMode=!game.darkMode; saveGame(); updateUI();}
+      <div class="msg" id="message">Ready to write. Let's go!</div>
+      <div class="boxed-note">Tip: Seal for judge-based points. Lick for immediate bonus. Rapid-click the lick button for quick-lick combos!</div>
+    </main>
 
-// ---------- Init ----------
-renderShop();
-updateUI();
-showMessage("Welcome to Mutation Madness! 🎃","purple");
-</script>
+    <aside class="side">
+      <div class="shop-section">
+        <h3>🖋 Pen Shop <small style="font-weight:600;color:#666"> (Boost writing power)</small></h3>
+        <div id="penShop" class="shop-list"></div>
+      </div>
+
+      <div class="shop-section" style="margin-top:12px">
+        <h3>👅 Tongue Shop <small style="font-weight:600;color:#666"> (Boost licking power)</small></h3>
+        <div id="tongueShop" class="shop-list"></div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div style="font-weight:700;margin-bottom:6px">Inventory</div>
+        <div id="inventory" style="min-height:40px;color:#444">— none —</div>
+      </div>
+
+      <div style="margin-top:12px;font-size:13px;color:#444">
+        <strong>Controls</strong>
+        <ul style="padding-left:18px;margin:8px 0 0 0;color:#444">
+          <li>Submit — evaluates & gives points + licks</li>
+          <li>Seal — judge length-based bonus and archives letter</li>
+          <li>Lick — consumes a stored lick for big bonus. Rapid clicks give combo points.</li>
+        </ul>
+      </div>
+    </aside>
+
+    <footer>Made with 🔥 by Atharv & Arjun — fusion edition</footer>
+  </div>
+
+  <!-- Audio -->
+  <audio id="penSound" src="https://www.soundjay.com/mechanical/pen-scratch-1.mp3" preload="auto"></audio>
+  <audio id="sealSound" src="https://www.soundjay.com/button/button-16.mp3" preload="auto"></audio>
+  <audio id="lickSound" src="https://www.soundjay.com/button/button-10.mp3" preload="auto"></audio>
+
+  <script>
+    // ---------- Game state ----------
+    const halloweenActive = new Date().getMonth() === 9 && new Date().getDate() < 32;
+    const game = {
+      points: 0,
+      penLevel: 1,
+      tongueLevel: 1,
+      licksAvailable: 0,
+      inventory: [],
+      halloweenMode: halloweenActive
+    };
+
+    // ---------- Load from localStorage ----------
+    function loadGame(){
+      const saved = localStorage.getItem("patrSimSave");
+      if(saved){
+        const data = JSON.parse(saved);
+        Object.assign(game, data);
+      }
+    }
+
+    function saveGame(){
+      localStorage.setItem("patrSimSave", JSON.stringify(game));
+    }
+
+    loadGame();
+
+    // ---------- Items ----------
+    const penItems = [
+      { name: "Ballpoint Pen", cost: 100, stats: { power: 5, speed: 5, rarity: "Common" }, description: "Reliable, boring, but better than nothing." },
+      { name: "Gel Pen", cost: 200, stats: { power: 10, speed: 8, rarity: "Common" }, description: "Smooth and fast." },
+      { name: "Fountain Pen", cost: 300, stats: { power: 15, speed: 10, rarity: "Rare" }, description: "Elegant ink flow." },
+      { name: "Quill", cost: 400, stats: { power: 18, speed: 12, rarity: "Rare" }, description: "Classic and poetic." },
+      { name: "🧠 Brainstem Pen", cost: 500, stats: { power: 20, speed: 15, rarity: "Epic" }, description: "Licks with intelligence." },
+      { name: "🪞 Mirror Pen", cost: 1500, stats: { power: 48, speed: 30, rarity: "Epic" }, description: "Reflects your intent. Doubles poetic letters." },
+      { name: "🧿 Evil Eye Ink", cost: 1600, stats: { power: 50, speed: 32, rarity: "Legendary" }, description: "Protects from spam. Bonus on cursed letters." },
+      { name: "🪐 Void Marker", cost: 2000, stats: { power: 60, speed: 45, rarity: "Legendary" }, description: "Letters vanish to infinity. Points multiplied." },
+    ];
+
+    const tongueItems = [
+      { name: "Basic Tongue", cost: 100, stats: { lick: 1 }, description: "Normal lick." },
+      { name: "Long Tongue", cost: 250, stats: { lick: 2 }, description: "Larger reach, stronger lick." },
+      { name: "Sticky Tongue", cost: 400, stats: { lick: 3 }, description: "Extra adhesion for bonus points." },
+      { name: "Dragon Tongue", cost: 1000, stats: { lick: 7 }, description: "Fires rapid licks, big power." },
+      { name: "Golden Tongue", cost: 1500, stats: { lick: 12 }, description: "Legendary licking power." }
+    ];
+
+    // ---------- Shop ----------
+    function renderShop(){
+      const penShop = document.getElementById("penShop");
+      penShop.innerHTML = "";
+      penItems.forEach((item,i)=>{
+        const div = document.createElement("div");
+        div.className="shop-item";
+        div.innerHTML=`<div>
+          <strong>${item.name}</strong>
+          <small>${item.description}</small>
+        </div>
+        <div>
+          <div style="font-size:13px;color:#333;font-weight:700">₹${item.cost}</div>
+          <button class="buy" onclick="buyPen(${i})">Buy</button>
+        </div>`;
+        penShop.appendChild(div);
+      });
+
+      const tongueShop = document.getElementById("tongueShop");
+      tongueShop.innerHTML = "";
+      tongueItems.forEach((item,i)=>{
+        const div = document.createElement("div");
+        div.className="shop-item";
+        div.innerHTML=`<div>
+          <strong>${item.name}</strong>
+          <small>${item.description}</small>
+        </div>
+        <div>
+          <div style="font-size:13px;color:#333;font-weight:700">₹${item.cost}</div>
+          <button class="buy" onclick="buyTongue(${i})">Buy</button>
+        </div>`;
+        tongueShop.appendChild(div);
+      });
+    }
+
+    function buyPen(index){
+      const item = penItems[index];
+      if(game.points >= item.cost){
+        game.points -= item.cost;
+        game.penLevel = item.stats.power;
+        game.inventory.push(item.name);
+        updateStats();
+        renderInventory();
+        saveGame();
+        showMsg(`Bought ${item.name}! Writing power upgraded.`);
+      }else showMsg("Not enough points for this pen.");
+    }
+
+    function buyTongue(index){
+      const item = tongueItems[index];
+      if(game.points >= item.cost){
+        game.points -= item.cost;
+        game.tongueLevel = item.stats.lick;
+        game.inventory.push(item.name);
+        updateStats();
+        renderInventory();
+        saveGame();
+        showMsg(`Bought ${item.name}! Licking power upgraded.`);
+      }else showMsg("Not enough points for this tongue.");
+    }
+
+    function renderInventory(){
+      const inv = document.getElementById("inventory");
+      inv.innerHTML = game.inventory.length ? game.inventory.join(" | ") : "— none —";
+    }
+
+    // ---------- Stats ----------
+    function updateStats(){
+      document.getElementById("points").textContent = game.points;
+      document.getElementById("licksLeft").textContent = game.licksAvailable;
+    }
+
+    function showMsg(msg){
+      const el = document.getElementById("message");
+      el.textContent = msg;
+    }
+
+    // ---------- Actions ----------
+    const letterInput = document.getElementById("letterInput");
+    const letterBox = document.getElementById("letterBox");
+    document.getElementById("submitBtn").addEventListener("click", submitLetter);
+    document.getElementById("sealBtn").addEventListener("click", sealLetter);
+    document.getElementById("lickBtn").addEventListener("click", lickLetter);
+    document.getElementById("clearHistory").addEventListener("click", ()=>{
+      letterBox.innerHTML = "";
+      showMsg("Letter history cleared.");
+      saveGame();
+    });
+
+    function submitLetter(){
+      const text = letterInput.value.trim();
+      if(!text){ showMsg("Type something first!"); return; }
+
+      // Prevent copy-paste spam
+      if(window.getSelection().toString().length > 0){
+        showMsg("No copy-paste allowed!");
+        return;
+      }
+
+      const pointsEarned = Math.min(text.length, 100) + game.penLevel;
+      const licksGained = Math.ceil(pointsEarned/25);
+      game.points += pointsEarned;
+      game.licksAvailable += licksGained;
+      letterBox.innerHTML += `<p>✍️ Letter submitted (+${pointsEarned} points, +${licksGained} licks)</p>`;
+      letterInput.value = "";
+      document.getElementById("penSound").play();
+      updateStats();
+      saveGame();
+    }
+
+    function sealLetter(){
+      const text = letterInput.value.trim();
+      if(!text){ showMsg("Nothing to seal!"); return; }
+      const bonus = Math.floor(text.length/2) + game.penLevel;
+      game.points += bonus;
+      game.licksAvailable += Math.floor(bonus/10);
+      letterBox.innerHTML += `<p>🔒 Letter sealed (+${bonus} bonus points)</p>`;
+      letterInput.value = "";
+      document.getElementById("sealSound").play();
+      updateStats();
+      saveGame();
+    }
+
+    function lickLetter(){
+      if(game.licksAvailable <=0){ showMsg("No licks available! Submit letters to gain licks."); return; }
+      const lickPoints = Math.floor(game.tongueLevel*5 + Math.random()*5);
+      game.points += lickPoints;
+      game.licksAvailable--;
+      letterBox.innerHTML += `<p>😛 Lick used! +${lickPoints} points</p>`;
+      document.getElementById("lickSound").play();
+      updateStats();
+      saveGame();
+    }
+
+    // ---------- Keyboard shortcut ----------
+    letterInput.addEventListener("keydown",e=>{
+      if(e.ctrlKey && e.key==="Enter"){ submitLetter(); }
+    });
+
+    // ---------- Init ----------
+    if(game.halloweenMode){
+      document.body.classList.add("halloween");
+    }
+    renderShop();
+    renderInventory();
+    updateStats();
+    showMsg("Game loaded. Ready to write and lick!");
+  </script>
 </body>
 </html>
