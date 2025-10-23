@@ -87,15 +87,17 @@
     .halloween #halloweenBanner {
       display: block;
     }
-    .lore {
-      margin-top: 40px;
-      text-align: left;
+    .boxed {
+      border: 2px solid #ff6f00;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px auto;
       max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
+      background-color: #fff8e1;
     }
-    .lore p {
-      margin: 10px 0;
+    .halloween .boxed {
+      border-color: #ff9800;
+      background-color: #2c2c2c;
     }
   </style>
 </head>
@@ -109,7 +111,7 @@
   <button onclick="writeLetter()">Submit Letter</button>
   <button onclick="lickLetter()" id="lickBtn" disabled>Lick Letter</button><br><br>
 
-  <div class="shop">
+  <div class="shop boxed">
     <h2 onclick="toggleShop('penShop')">🖋 Pen Shop ▼</h2>
     <div id="penShop" style="display: none;"></div>
 
@@ -117,23 +119,10 @@
     <div id="tongueShop" style="display: none;"></div>
   </div>
 
-  <div class="lore">
-    <h2 onclick="toggleLore('origin')">📖 Patr’s Origin ▼</h2>
-    <div id="origin" style="display:block;">
-      <p>Long ago, in a forgotten mailbox deep in the woods, a mysterious figure named Patr was born from a cursed envelope. His tongue, enchanted by ancient ink, seeks only one thing: to taste the truth hidden in letters.</p>
-      <p>Some say he was once a postman. Others believe he’s the ghost of a rejected love confession. All we know is… he licks.</p>
-    </div>
-
-    <h2 onclick="toggleLore('shopkeeper')">👻 Haunted Shopkeeper ▼</h2>
-    <div id="shopkeeper" style="display:block;">
-      <p>The Pen Shop is run by a shadowy figure known only as “The Inkkeeper.” He never speaks — except when you buy a Halloween pen. Then, he whispers things like “This quill remembers your sins” or “The pumpkin pen sees your future.”</p>
-      <p>Some players report hearing scratching sounds after buying the Ghostwriter. Others… never returned.</p>
-    </div>
-  </div>
-
   <div id="message"></div>
   <div class="footer">Made by Atharv & Arjun 🔥</div>
- <script>
+
+  <script>
     const halloweenActive = new Date().getMonth() === 9 && new Date().getDate() < 32;
 
     const game = {
@@ -179,13 +168,9 @@
         if (this.inventory.includes(item.name)) return `⚠️ You already own ${item.name}.`;
         this.points -= item.cost;
         this.inventory.push(item.name);
-        if (type === "pen") this.penLevel++;
-        if (type === "tongue") this.tongueLevel++;
-        let message = `✅ Bought ${item.name}! ${type === "pen" ? "Pen" : "Tongue"} level is now ${type === "pen" ? this.penLevel : this.tongueLevel}.`;
-        if (item.halloween) {
-          message += ` 👻 The haunted shopkeeper whispers: "${item.name} will change your fate..."`;
-        }
-        return message;
+        if (type === "pen") this.penLevel += item.stats.power / 10;
+        if (type === "tongue") this.tongueLevel += item.stats.power / 10;
+        return `✅ Bought ${item.name}! Power: ${item.stats.power}, Speed: ${item.stats.speed}, Rarity: ${item.stats.rarity}`;
       }
     };
 
@@ -194,71 +179,98 @@
     }
 
     const penItems = [
-      { name: "Ballpoint Pen", cost: 100 },
-      { name: "Gel Pen", cost: 200 },
-      { name: "Fountain Pen", cost: 300 },
-      { name: "Quill", cost: 400 },
-      { name: "🎃 Pumpkin Pen", cost: 250, halloween: true },
-      { name: "👻 Ghostwriter", cost: 350, halloween: true },
-      { name: "🩸 Bloody Quill", cost: 500, halloween: true }
-    ];
+      { name: "Ballpoint Pen", cost: 100, stats: { power: 5, speed: 5, rarity: "Common" }, description: "Reliable, boring, but better than nothing." },
+      { name: "Gel Pen", cost: 200, stats: { power: 10, speed: 8, rarity: "Common" }, description: "Smooth and fast." },
+      { name: "Fountain Pen", cost: 300, stats: { power: 15, speed: 10, rarity: "Rare" }, description: "Elegant ink flow." },
+      { name: "Quill", cost: 400, stats: { power: 18, speed: 12, rarity: "Rare" }, description: "Classic and poetic." },
+      { name: "🧠 Brainstem Pen", cost: 500, stats: { power: 20, speed: 15, rarity: "Epic" }, description: "Licks with intelligence." },
+      { name: "🪶 Raven Feather", cost: 600, stats: { power: 22, speed: 16, rarity: "Epic" }, description: "Dark and mysterious." },
+      { name: "🧊 Ice Quill", cost: 700, stats: { power: 25, speed: 18, rarity: "Epic" }, description: "Freezes bad grammar." },
+      { name: "🪙 Gold Stylus", cost: 800, stats: { power: 28, speed: 20, rarity: "Epic" }, description: "Rich in points." },
+      { name: "🧃 Ink of Chaos", cost: 900, stats: { power: 30, speed: 20, rarity: "Epic" }, description: "Unpredictable ink." },
+      { name: "🌌 Cosmic Pen", cost: 1000, stats: { power: 35, speed: 25, rarity: "Epic" }, description: "Bends space." },
+      { name: "🩸 Bloodletter", cost: 1100, stats: { power: 38, speed: 26, rarity: "Epic" }, description: "Drips with cursed ink. Boosts dark letters." },
+{ name: "🕸️ Cobweb Quill", cost: 1200, stats: { power: 40, speed: 24, rarity: "Epic" }, description: "Spins sticky syntax. Slows spam." },
+{ name: "🦴 Bone Pen", cost: 1300, stats: { power: 42, speed: 22, rarity: "Epic" }, description: "Carved from ancient remains. Boosts lore letters." },
+{ name: "🧬 DNA Stylus", cost: 1400, stats: { power: 45, speed: 28, rarity: "Epic" }, description: "Mutates your writing. Bonus on weird words." },
+{ name: "🪞 Mirror Pen", cost: 1500, stats: { power: 48, speed: 30, rarity: "Epic" }, description: "Reflects your intent. Doubles poetic letters." },
+{ name: "🧿 Evil Eye Ink", cost: 1600, stats: { power: 50, speed: 32, rarity: "Legendary" }, description: "Protects from spam. Bonus on cursed letters." },
+{ name: "🦚 Peacock Feather", cost: 1700, stats: { power: 52, speed: 35, rarity: "Legendary" }, description: "Elegant and flamboyant. Boosts romantic letters." },
+{ name: "🧨 Firecracker Pen", cost: 1800, stats: { power: 55, speed: 38, rarity: "Legendary" }, description: "Explodes with points. Bonus on festive letters." },
+{ name: "🧁 Frosted Tip", cost: 1900, stats: { power: 58, speed: 40, rarity: "Legendary" }, description: "Sweet and deadly. Bonus on food-related letters." },
+{ name: "🪐 Void Marker", cost: 2000, stats: { power: 60, speed: 45, rarity: "Legendary" }, description: "Erases reality. Grants bonus on surreal letters." }
+];
+const tongueItems = [
+{ name: "Normal Tongue", cost: 100, stats: { power: 5, speed: 5, rarity: "Common" }, description: "Basic licking. No frills." },
+{ name: "Sticky Tongue", cost: 200, stats: { power: 10, speed: 6, rarity: "Common" }, description: "Clings to every word." },
+{ name: "Slurpy Tongue", cost: 300, stats: { power: 12, speed: 8, rarity: "Common" }, description: "Slurps up syntax." },
+{ name: "Turbo Tongue", cost: 400, stats: { power: 15, speed: 12, rarity: "Rare" }, description: "Fast and furious." },
+{ name: "🦎 Lizard Tongue", cost: 500, stats: { power: 18, speed: 14, rarity: "Rare" }, description: "Snaps to keywords." },
+{ name: "🧛 Vampire Tongue", cost: 600, stats: { power: 20, speed: 16, rarity: "Rare" }, description: "Licks with hunger. Bonus on romantic letters." },
+{ name: "🧠 Psychic Tongue", cost: 700, stats: { power: 22, speed: 18, rarity: "Epic" }, description: "Predicts punctuation." },
+{ name: "🧊 Frost Tongue", cost: 800, stats: { power: 25, speed: 20, rarity: "Epic" }, description: "Freezes filler words." },
+{ name: "🔥 Inferno Tongue", cost: 900, stats: { power: 28, speed: 22, rarity: "Epic" }, description: "Burns through nonsense." },
+{ name: "🌈 Rainbow Tongue", cost: 1000, stats: { power: 30, speed: 25, rarity: "Epic" }, description: "Licks with flair. Bonus on colorful language." },
+{ name: "🕷️ Spider Tongue", cost: 1100, stats: { power: 32, speed: 26, rarity: "Epic" }, description: "Weaves webs of meaning." },
+{ name: "🧪 Acid Tongue", cost: 1200, stats: { power: 35, speed: 28, rarity: "Epic" }, description: "Melts through lies." },
+{ name: "🦜 Parrot Tongue", cost: 1300, stats: { power: 38, speed: 30, rarity: "Epic" }, description: "Echoes truth. Bonus on repeated phrases." },
+{ name: "🪫 Static Tongue", cost: 1400, stats: { power: 40, speed: 32, rarity: "Epic" }, description: "Zaps typos." },
+{ name: "🧞 Genie Tongue", cost: 1500, stats: { power: 42, speed: 34, rarity: "Epic" }, description: "Grants bonus wishes (sometimes)." },
+{ name: "🪻 Floral Tongue", cost: 1600, stats: { power: 45, speed: 36, rarity: "Epic" }, description: "Smells like poetry. Bonus on nature letters." },
+{ name: "🧟 Zombie Tongue", cost: 1700, stats: { power: 48, speed: 38, rarity: "Epic" }, description: "Licks the undead. Bonus on horror letters." },
+{ name: "🪵 Bark Tongue", cost: 1800, stats: { power: 50, speed: 40, rarity: "Epic" }, description: "Rough but reliable." },
+{ name: "🪩 Disco Tongue", cost: 1900, stats: { power: 55, speed: 45, rarity: "Legendary" }, description: "Boogies through boring text." },
+{ name: "👑 Tongue of Vishvavasu", cost: 50000, stats: { power: 100, speed: 100, rarity: "Legendary" }, description: "Forged from celestial ink and cursed prophecy. Grants max licking power and divine truth detection." }
+];
+function renderShop(shopId, items, type) {
+  const container = document.getElementById(shopId);
+  container.innerHTML = "";
+  items.forEach(item => {
+    const btn = document.createElement("button");
+    btn.textContent = `${item.name} - ${item.cost} pts`;
+    btn.title = `Power: ${item.stats.power}, Speed: ${item.stats.speed}, Rarity: ${item.stats.rarity}\n${item.description}`;
+    btn.onclick = () => updateUI(game.buyItem(type, item));
+    container.appendChild(btn);
+  });
+}
 
-    const tongueItems = [
-      { name: "Normal Tongue", cost: 100 },
-      { name: "Sticky Tongue", cost: 200 },
-      { name: "Slurpy Tongue", cost: 300 },
-      { name: "Turbo Tongue", cost: 400 },
-      { name: "🧟 Zombie Tongue", cost: 250, halloween: true },
-{ name: "👻 Ghost Tongue", cost: 350, halloween: true },
-      { name: "🧛 Vampire Tongue", cost: 500, halloween: true }
-    ];
+function toggleShop(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === "none" ? "block" : "none";
+}
 
-    function renderShop(shopId, items, type) {
-      const container = document.getElementById(shopId);
-      container.innerHTML = "";
-      items.forEach(item => {
-        if (item.halloween && !game.halloweenMode) return;
-        const btn = document.createElement("button");
-        btn.textContent = `${item.name} - ${item.cost} pts`;
-        btn.onclick = () => updateUI(game.buyItem(type, item));
-        container.appendChild(btn);
-      });
-    }
+function updateUI(message) {
+  document.getElementById("points").textContent = `🧮 Points: ${game.points}`;
+  document.getElementById("licksLeft").textContent = `👅 Licks Available: ${game.licksAvailable}`;
+  document.getElementById("message").textContent = message || "";
+  document.getElementById("lickBtn").disabled = game.licksAvailable <= 0;
+  renderShop("penShop", penItems, "pen");
+  renderShop("tongueShop", tongueItems, "tongue");
+}
 
-    function toggleShop(id) {
-      const el = document.getElementById(id);
-      el.style.display = el.style.display === "none" ? "block" : "none";
-    }
+function writeLetter() {
+  const text = document.getElementById("letterInput").value;
+  if (!text.trim()) return updateUI("✍️ Write something first!");
+  const result = game.writeLetter(text);
+  const spamNote = result.isSpam ? " ⚠️ Spam detected. Points reduced." : "";
+  updateUI(`📜 Letter submitted! Earned ${result.bonus} points.${spamNote}`);
+  document.getElementById("letterInput").value = "";
+}
 
-    function toggleLore(id) {
-      const el = document.getElementById(id);
-      el.style.display = el.style.display === "none" ? "block" : "none";
-    }
+function lickLetter() {
+  const earned = game.lickLetter();
+  if (earned === 0) return updateUI("❌ No letters left to lick!");
+  updateUI(`👻 Licked the letter! Earned ${earned} points.`);
+}
 
-    function updateUI(message) {
-      document.getElementById("points").textContent = `🧮 Points: ${game.points}`;
-      document.getElementById("licksLeft").textContent = `👅 Licks Available: ${game.licksAvailable}`;
-      document.getElementById("message").textContent = message || "";
-      document.getElementById("lickBtn").disabled = game.licksAvailable <= 0;
-      renderShop("penShop", penItems, "pen");
-      renderShop("tongueShop", tongueItems, "tongue");
-    }
+// 🚫 Disable copy-paste in letter input
+document.getElementById("letterInput").addEventListener("paste", e => {
+  e.preventDefault();
+  updateUI("🚫 Copy-pasting is disabled. Write your own letter!");
+});
 
-    function writeLetter() {
-      const text = document.getElementById("letterInput").value;
-      if (!text.trim()) return updateUI("✍️ Write something first!");
-      const result = game.writeLetter(text);
-      const spamNote = result.isSpam ? " ⚠️ Spam detected. Points reduced." : "";
-      updateUI(`📜 Letter submitted! Earned ${result.bonus} points.${spamNote}`);
-      document.getElementById("letterInput").value = "";
-    }
-
-    function lickLetter() {
-      const earned = game.lickLetter();
-      if (earned === 0) return updateUI("❌ No letters left to lick!");
-      updateUI(`👻 Licked the letter! Earned ${earned} points.`);
-    }
-  </script>
+// 🔄 Initial UI setup
+updateUI("Made by Atharv & Arjun 🔥");
+</script>
 </body>
 </html>
-
